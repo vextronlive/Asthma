@@ -1,6 +1,13 @@
-import streamlit as st
-import joblib
 import os
+import streamlit as st
+
+# Force install missing libraries
+os.system("pip install joblib scikit-learn pandas numpy")
+
+import joblib
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
 
 st.title("🫁 Asthma Prediction App")
 

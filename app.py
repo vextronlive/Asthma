@@ -1,16 +1,22 @@
 import streamlit as st
+import joblib
 import os
 
-st.title("📂 Debugging Model Load Issue")
+st.title("🫁 Asthma Prediction App")
 
-# List all files in the Streamlit Cloud directory
-files = os.listdir()
+MODEL_PATH = "asthma_model.pkl"
 
-st.write("📝 Files in Current Directory:")
-st.write(files)  # Display all files present
+# Check if model exists
+if os.path.exists(MODEL_PATH):
+    try:
+        @st.cache_resource()
+        def load_model():
+            return joblib.load(MODEL_PATH)
 
-# Check if the model exists
-if "asthma_model.pkl" in files:
-    st.success("✅ Model file found!")
+        model = load_model()
+        st.success("✅ Model loaded successfully!")
+
+    except Exception as e:
+        st.error(f"🚨 Error loading model: {e}")
 else:
-    st.error("🚨 Model file is missing! Make sure it's uploaded to GitHub.")
+    st.error("🚨 Model file is missing! Make sure 'asthma_model.pkl' is uploaded.")
